@@ -7,15 +7,15 @@ export class Pin {
   pin_id: number;
 
   @Column({ type: 'varchar', length: 200, unique: true })
-  pin: string;
+  pin_code: string;
 
-  @Column({ type: 'date' })
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   loading_date: string;
 
   @Column({ type: 'decimal', precision: 9, scale: 2, unsigned: true })
   selling_price: number;
 
-  @Column({ type: 'date' })
+  @Column({ type: 'timestamp', nullable: true })
   purchase_date: string;
 
   @Column({ type: 'varchar', length: 200 })

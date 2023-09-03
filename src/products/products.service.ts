@@ -21,18 +21,11 @@ export class ProductsService {
   ) {}
 
   /**
-   * Método para registrar un producto en base de datos
-   * @param newProduct de tipo CreateProductDto
-   * @returns Product
+   * Metodo para consultar todos los productos existentes
+   * @returns Product[] arreglo de productos
    */
-  async create(newProduct: CreateProductDto): Promise<Product> {
-    const productFound = await this.findByName(newProduct.name);
-
-    if (productFound)
-      throw new BadRequestException(ExceptionConstants.entityAlreadyExists);
-
-    const product = this.productsRepository.create(newProduct);
-    return await this.productsRepository.save(product);
+  async findAll(): Promise<Product[]> {
+    return await this.productsRepository.find();
   }
 
   /**
@@ -55,6 +48,21 @@ export class ProductsService {
     return await this.productsRepository.findOneBy({
       name: name,
     });
+  }
+
+  /**
+   * Método para registrar un producto en base de datos
+   * @param newProduct de tipo CreateProductDto
+   * @returns Product
+   */
+  async create(newProduct: CreateProductDto): Promise<Product> {
+    const productFound = await this.findByName(newProduct.name);
+
+    if (productFound)
+      throw new BadRequestException(ExceptionConstants.entityAlreadyExists);
+
+    const product = this.productsRepository.create(newProduct);
+    return await this.productsRepository.save(product);
   }
 
   /**
