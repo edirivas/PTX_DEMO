@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, Get } from '@nestjs/common';
 import { SalesService } from './sales.service';
 import {
   ApiNotFoundResponse,
@@ -7,14 +7,27 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { ExceptionConstants, StatusCodeConstants } from 'src/constants';
-import { SaleDto } from './dtos/sale.dto';
 import { plainToInstance } from 'class-transformer';
-import { SellPinDto } from './dtos/sell-pin.dto';
+import { SaleDto, SellPinDto } from './dtos';
 
 @ApiTags('sales')
 @Controller('sales')
 export class SalesController {
   constructor(private salesService: SalesService) {}
+
+  @ApiOperation({ summary: 'To find all sales' })
+  @Get()
+  async findAll(): Promise<SaleDto[]> {
+    const sales = await this.salesService.findAll();
+
+    const salesDto = sales.map((sale) =>
+      plainToInstance(SaleDto, sale, {
+        excludeExtraneousValues: true,
+      }),
+    );
+
+    return salesDto;
+  }
 
   @ApiOperation({ summary: 'To sale a pin' })
   @ApiNotFoundResponse({ description: ExceptionConstants.entityNotFound })

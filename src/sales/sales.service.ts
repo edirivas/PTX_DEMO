@@ -16,6 +16,17 @@ export class SalesService {
   ) {}
 
   /**
+   * Metodo para consultar todas las ventas existentes
+   * @returns Sale[] arreglo de ventas
+   */
+  async findAll(): Promise<Sale[]> {
+    return this.dataSource.getRepository(Sale).find({
+      relations: { product: true, pin: true },
+      order: { purchase_date: 'DESC' },
+    });
+  }
+
+  /**
    * Método para realizar la venta de un pin
    * @param sellPinDto Objeto con información del pin, producto y cliente
    * @returns Sale
