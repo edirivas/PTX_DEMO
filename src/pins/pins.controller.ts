@@ -66,12 +66,12 @@ export class PinsController {
 
   @ApiOperation({ summary: 'To update a pin' })
   @ApiNotFoundResponse({ description: ExceptionConstants.entityNotFound })
-  @Put(':id')
+  @Put(':pin_id')
   async update(
-    @Param('id', ParseIntPipe) id: number,
+    @Param('pin_id', ParseIntPipe) pinId: number,
     @Body() updatePin: UpdatePinDto,
   ): Promise<PinDto> {
-    const pin = this.pinsService.update(id, updatePin);
+    const pin = this.pinsService.update(pinId, updatePin);
     return plainToInstance(PinDto, pin, {
       excludeExtraneousValues: true,
     });

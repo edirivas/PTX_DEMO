@@ -52,13 +52,13 @@ export class PinsService {
 
   /**
    * Método para actualizar un pin dado el ID y las propiedades
-   * @param pin_id ID del pin que se va a actualizar
+   * @param pinId ID del pin que se va a actualizar
    * @param updatePin Propiedades del pin
    * @returns Pin
    */
-  async update(pin_id: number, updatePin: UpdatePinDto): Promise<Pin> {
+  async update(pinId: number, updatePin: UpdatePinDto): Promise<Pin> {
     const update = {
-      pin_id,
+      pin_id: pinId,
       ...updatePin,
     };
 

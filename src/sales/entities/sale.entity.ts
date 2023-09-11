@@ -18,7 +18,7 @@ export class Sale {
   @JoinColumn({ foreignKeyConstraintName: 'fk_product_id', name: 'product_id' })
   product: Product;
 
-  @Column({ type: 'timestamp' })
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   purchase_date: string;
 
   @OneToOne(() => Pin, (pin) => pin.sale)

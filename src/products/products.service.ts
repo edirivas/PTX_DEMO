@@ -30,12 +30,12 @@ export class ProductsService {
 
   /**
    * Método para consultar un producto dado el ID
-   * @param id ID del producto
+   * @param productId ID del producto
    * @returns Product
    */
-  async findById(id: number): Promise<Product | null> {
+  async findById(productId: number): Promise<Product | null> {
     return await this.productsRepository.findOneBy({
-      product_id: id,
+      product_id: productId,
     });
   }
 
@@ -67,16 +67,16 @@ export class ProductsService {
 
   /**
    * Método para actualizar un producto dado el ID y las propiedades
-   * @param product_id ID del producto que se va a actualizar
+   * @param productId ID del producto que se va a actualizar
    * @param updateProduct Propiedades del producto
    * @returns Product
    */
   async update(
-    product_id: number,
+    productId: number,
     updateProduct: UpdateProductDto,
   ): Promise<Product> {
     const update = {
-      product_id,
+      product_id: productId,
       ...updateProduct,
     };
 

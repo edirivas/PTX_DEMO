@@ -1,5 +1,12 @@
 import { Transform } from 'class-transformer';
-import { IsNumber, IsPositive, IsString, Length } from 'class-validator';
+import {
+  IsEnum,
+  IsNumber,
+  IsPositive,
+  IsString,
+  Length,
+} from 'class-validator';
+import { PinStatus } from 'src/enums';
 
 export class CreatePinDto {
   @IsString()
@@ -11,8 +18,6 @@ export class CreatePinDto {
   @IsPositive()
   readonly selling_price: number;
 
-  @IsString()
-  @Transform(({ value }) => (typeof value == 'string' ? value.trim() : value))
-  @Length(1, 200)
-  readonly status: string;
+  @IsEnum(PinStatus)
+  readonly status: PinStatus;
 }

@@ -38,11 +38,13 @@ export class ProductsController {
     return productsDto;
   }
 
-  @ApiOperation({ summary: 'To find a product by id' })
+  @ApiOperation({ summary: 'To find a product by product_id' })
   @ApiNotFoundResponse({ description: ExceptionConstants.entityNotFound })
-  @Get('id/:id')
-  async findById(@Param('id', ParseIntPipe) id: number): Promise<ProductDto> {
-    const product = await this.productsService.findById(id);
+  @Get('product_id/:product_id')
+  async findById(
+    @Param('product_id', ParseIntPipe) productId: number,
+  ): Promise<ProductDto> {
+    const product = await this.productsService.findById(productId);
 
     if (!product)
       throw new NotFoundException(ExceptionConstants.entityNotFound);
@@ -81,12 +83,12 @@ export class ProductsController {
 
   @ApiOperation({ summary: 'To update a product' })
   @ApiNotFoundResponse({ description: ExceptionConstants.entityNotFound })
-  @Put(':id')
+  @Put(':product_id')
   async update(
-    @Param('id', ParseIntPipe) id: number,
+    @Param('product_id', ParseIntPipe) productId: number,
     @Body() updateProduct: UpdateProductDto,
   ): Promise<ProductDto> {
-    const product = this.productsService.update(id, updateProduct);
+    const product = this.productsService.update(productId, updateProduct);
     return plainToInstance(ProductDto, product, {
       excludeExtraneousValues: true,
     });
